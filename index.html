@@ -16,7 +16,7 @@
 <body>
 
 <h1>agent-lab n8n</h1>
-<p class="meta">Last updated: 29 September 2026</p>
+<p class="meta">Last updated: 6 October 2026</p>
 
 <p>agent-lab n8n is a personal automation app with a single user, its owner, Bryan Byrne.
 It is not offered to or used by anyone else. It runs on the owner's own computer.</p>
@@ -28,19 +28,30 @@ It is not offered to or used by anyone else. It runs on the owner's own computer
 (<code>gmail.readonly</code>). It cannot send, delete, or change email.</p>
 
 <h3>How the data is used</h3>
-<ul>
-  <li>The app reads message headers (sender, subject, date, and Gmail's
-      authentication result) to spot security alerts, fraud notices, and
-      payment deadlines, using fixed rules.</li>
-  <li>For messages that match a rule, the sender, subject, and the reason it matched are stored
-      on the owner's computer and sent as a notification to the owner's own private
-      Discord channel. Nothing else from the email is sent there.</li>
-  <li>Email data is used only to help the owner manage his own email.</li>
-</ul>
+<p><strong>Security and fraud rules.</strong> The app reads message headers (sender, subject,
+date, and Gmail's authentication result) and applies fixed rules to spot security alerts,
+fraud notices and payment deadlines. For a matching message, the sender, subject and the
+reason it matched are stored on the owner's computer and sent as a notification to the
+owner's private Discord channel.</p>
+<p><strong>Sorting by a local AI model.</strong> For other messages, the app passes the headers
+and up to the first 6,000 characters of the plain-text body to an AI model that runs on the
+owner's computer. No part of the message leaves the computer at this step. The model's output
+is stored on the computer: a classification (urgent, action or ignore), a deadline date if
+there is one, and a one-sentence reason of up to about 130 characters. The reason is written
+after reading the message, so it can paraphrase what the message says. Message bodies are not
+stored.</p>
+<p><strong>Questions to an AI assistant.</strong> The owner can ask an AI assistant questions in
+their private Discord channel. To answer questions about email, the assistant reads the stored
+data described above: sender address, subject, date received, classification, deadline and the
+one-sentence reason. It sends that to Anthropic's Claude API to write its answer, and the answer
+is posted in the owner's Discord channel. The assistant has no access to Gmail and never sees
+message bodies. But the one-sentence reason it reads was written from the body, so
+body-derived content does reach Anthropic in that summarized form.</p>
+<p>Email data is used only to help the owner manage their own email.</p>
 
 <h3>What the app does not do</h3>
 <ul>
-  <li>It does not sell email data or share it with anyone other than the services named above.</li>
+  <li>It does not sell email data or share it with anyone other than Discord and Anthropic, as described above.</li>
   <li>It does not use email data for advertising.</li>
   <li>It does not use email data to train AI models.</li>
 </ul>
